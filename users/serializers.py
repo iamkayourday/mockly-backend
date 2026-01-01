@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import User
+from .models import MockUser
 
 class UserSerializer(serializers.ModelSerializer):
     full_name = serializers.ReadOnlyField()
     full_address = serializers.ReadOnlyField()
     
     class Meta:
-        model = User
+        model = MockUser
         fields = [
             'id',
             'first_name',

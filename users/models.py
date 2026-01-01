@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class User(models.Model):
+class MockUser(models.Model):
     GENDER_CHOICES = [
         ('male', 'MAle'),
         ('female', 'Female'),

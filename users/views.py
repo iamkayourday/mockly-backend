@@ -1,4 +1,4 @@
-from .models import User
+from .models import MockUser
 from .serializers import UserSerializer
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -11,7 +11,7 @@ import random
 
 # Returns a list of users with filtering, searching, and ordering capabilities
 class UserListView(generics.ListAPIView):
-    queryset = User.objects.all()
+    queryset = MockUser.objects.all()
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['first_name', 'last_name', 'gender', 'email', 'job_title', 'company']
@@ -33,7 +33,7 @@ class UserListView(generics.ListAPIView):
 
 # Returns details of a specific user by ID
 class UserDetailView(generics.RetrieveAPIView):
-    queryset = User.objects.all()
+    queryset = MockUser.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'id'    
 
@@ -53,7 +53,7 @@ class UserDeleteView(generics.DestroyAPIView):
 class RandomUserView(APIView):
       
       def get(self, request):
-        count = User.objects.count()
+        count = MockUser.objects.count()
         if count == 0:
             return Response(
                 {"error": "No users available in database"},
@@ -61,7 +61,7 @@ class RandomUserView(APIView):
             )
         
         random_index = random.randint(0, count - 1)
-        random_user = User.objects.all()[random_index]
+        random_user = MockUser.objects.all()[random_index]
         
         serializer = UserSerializer(random_user)
         return Response(serializer.data)
@@ -72,5 +72,5 @@ class UsersCountView(APIView):
     # Returns total number of users
    
     def get(self, request):
-        count = User.objects.count()
+        count = MockUser.objects.count()
         return Response({"count": count})
